@@ -7,7 +7,7 @@ const addProduct = () => {
     productField.value = '';
     quantityField.value = '';
 
-    console.log(product, quantity);
+    // console.log(product, quantity);
     displayProduct(product, quantity)
     saveProdductLocalStorage(product, quantity)
 }
@@ -31,6 +31,7 @@ const getShoppingCart = () => {
 const saveProdductLocalStorage = (product, quantity) => {
     const cart = getShoppingCart()
     cart[product] = quantity
+    console.log(cart[product])
     const cartStingified = JSON.stringify(cart)
     localStorage.setItem('cart', cartStingified)
 
@@ -40,7 +41,7 @@ const displayProductFromLocal = () => {
     const savedProduct = getShoppingCart()
     for (const product in savedProduct) {
         const quantity = savedProduct[product]
-        console.log(product, quantity)
+        // console.log(product, quantity)
         displayProduct(product, quantity)
     }
 
