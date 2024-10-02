@@ -8,52 +8,41 @@ const addProduct = () => {
     quantityField.value = '';
 
     console.log(product, quantity);
-    displayProduct(product,quantity)
-
+    displayProduct(product, quantity)
+    saveProdductLocalStorage(product, quantity)
 }
 
-const displayProduct=(product, quantity)=>{
-    const container=document.getElementById('product-container');
-    const li=document.createElement('li');
-    li.innerText=`${product}:${quantity}`;
+const displayProduct = (product, quantity) => {
+    const container = document.getElementById('product-container');
+    const li = document.createElement('li');
+    li.innerText = `${product}:${quantity}`;
     container.appendChild(li)
 }
 
+const getShoppingCart = () => {
+    let cart = {}
+    const storedCart = localStorage.getItem('cart')
+    if (storedCart) {
+        cart = JSON.parse(storedCart)
+    }
+    return cart
+}
 
+const saveProdductLocalStorage = (product, quantity) => {
+    const cart = getShoppingCart()
+    cart[product] = quantity
+    const cartStingified = JSON.stringify(cart)
+    localStorage.setItem('cart', cartStingified)
 
+}
 
+const displayProductFromLocal = () => {
+    const savedProduct = getShoppingCart()
+    for (const product in savedProduct) {
+        const quantity = savedProduct[product]
+        console.log(product, quantity)
+        displayProduct(product, quantity)
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// practice code
-
-// const addProduct = () => {
-//     const productName = document.getElementById('product-name')
-//     const productQuantity = document.getElementById('product-quantity')
-//     const product = productName.value;
-//     const quantity = productQuantity.value;
-//     console.log(product, quantity)
-//     productName.value = '';
-//     productQuantity.value = '';
-
-//     displayProduct(product, quantity)
-// }
-// const displayProduct = (product, quantity) => {
-//     const productContainer = document.getElementById('product-container')
-//     const li=document.createElement('li')
-//     li.innerText=`${product}:${quantity}`
-//     productContainer.appendChild(li)
-
-// }
+}
+displayProductFromLocal()
